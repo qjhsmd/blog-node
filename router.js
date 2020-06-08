@@ -25,5 +25,6 @@ router.all('*', function(req, res, next) {
    router.get('/api/chicken',handler.chicken)
    // router.get('/api/poisonous_chicken',handler.poisonous_chicken)
    router.post('/api/create_artcle',handler.create_artcle)
-   router.post('/api/login',handler.login)
+   router.get('/api/list_artcle',handler.list_artcle)
+   router.get('/api/login',handler.login)
    module.exports = router;

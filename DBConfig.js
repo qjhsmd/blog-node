@@ -5,7 +5,8 @@ var mysqlConfig = {
     port     :'3306',
     user     : 'root',
     password : '_Q,j&h*54618482',
-    database : 'blog'
+    database : 'blog',
+    useConnectionPooling: true
 }
 
 module.exports.connection = mysql.createConnection(mysqlConfig)

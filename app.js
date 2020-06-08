@@ -5,6 +5,8 @@ var router =require('./router');
 var session = require('express-session');
 var DBConfig = require('./DBConfig.js');
 var tool = require('./util/tool.js');
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 //配置中间件
 app.use(session({
     secret: "keyboard cat",
