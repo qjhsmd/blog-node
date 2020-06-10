@@ -17,3 +17,4 @@ module.exports.chicken = index.chicken
 module.exports.poisonous_chicken = index.poisonous_chicken
 module.exports.create_artcle = index.create_artcle
 module.exports.list_artcle = index.list_artcle
+module.exports.artcle_detail = index.artcle_detail

@@ -30,3 +30,10 @@ module.exports.login = function (req, res) {
       console.log('------------------------------------------------------------\n\n');
     });
   };
+
+  module.exports.loginOut = function (req,res) {
+     //注销session
+     req.session.destroy(function(err){
+      res.send("退出登录！"+err);
+  });
+  }
