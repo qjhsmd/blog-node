@@ -16,14 +16,12 @@ var pool = mysql.createPool(config)
 module.exports.connection = pool;
 
 module.exports.mysqlQuery =  function query(sql, sqlParams) {
-    console.log(sqlParams)
-    // console.log(callback)
     pool.getConnection(function (err, conn) {
         if (err) {
-            // callback(err, null, null);
+            callback(err, null, null);
         } else {
             conn.query(sql, sqlParams, function (qerr, vals, fields) {
-                // callback(qerr, vals, fields);
+                callback(qerr, vals, fields);
             });
             
         }
