@@ -231,7 +231,7 @@ module.exports.list_artcle = function (req, res) {
             }
             info.list = result
             console.log('--------------------------SELECT----------------------------');
-            // console.log(fields);
+            //  console.log(fields);
             res.json(req.app.locals.result(info));
             console.log('------------------------------------------------------------\n\n');
             // req.app.locals.connection.end() 
