@@ -9,9 +9,14 @@ var index =require('./controller/index.js')
 
 // 前后端分离的
 module.exports.index = index.index
+
 module.exports.baseInfo = index.baseInfo
 module.exports.demo = index.demo
 module.exports.menu = index.menu
+module.exports.classify = index.classify
+module.exports.social = index.social
+module.exports.features = index.features
+
 module.exports.login = login.login
 module.exports.chicken = index.chicken
 module.exports.poisonous_chicken = index.poisonous_chicken

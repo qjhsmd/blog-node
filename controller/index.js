@@ -1,3 +1,5 @@
+var client = require('../redisConfig.js')
+
 module.exports.index = function (req, res) {
     let info = {
         email: req.app.locals.email,
@@ -6,19 +8,35 @@ module.exports.index = function (req, res) {
     res.json(req.app.locals.result(info));
 };
 module.exports.baseInfo = function (req, res) {
-    var sql = 'SELECT * FROM base_info';
-    //查
-    req.app.locals.mysqlQuery(sql, function (err, result) {
-        if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-            return;
-        }
+    // get 请求 先从redis取，如果没有，再从数据库去，取了之后同时存入redis
+    client.hgetall('base_info', function (err, obj) {
+        console.dir(obj);
+        console.dir(err);
+        if(err || !obj){
+            console.log('获取缓存失败');
+            var sql = 'SELECT * FROM base_info';//查
+                req.app.locals.mysqlQuery(sql, function (err, result) {
+                    if (err) {
+                        console.log('[SELECT ERROR] - ', err.message);
+                        return;
+                    }
 
-        console.log('--------------------------SELECT----------------------------');
-        console.log(result);
-        res.json(req.app.locals.result(result[0]));
-        console.log('------------------------------------------------------------\n\n');
+                    console.log('--------------------------SELECT----------------------------');
+                    console.log(result[0]);
+                    res.json(req.app.locals.result(result[0]));
+                    client.hmset('base_info',result[0]);
+                    console.log('写入缓存');
+                    console.log('------------------------------------------------------------\n\n');
+                });
+        }else{
+            console.log('获取缓存成功');
+            res.json(req.app.locals.result(obj));
+            console.log('得到后就删除');
+            client.del('base_info')
+        }
     });
+
+    
 };
 module.exports.demo = function (req, res) {
     console.log('======session========')
@@ -50,6 +68,48 @@ module.exports.menu = function (req, res) {
         console.log('--------------------------SELECT----------------------------');
         console.log(result);
         res.json(result);
+        console.log('------------------------------------------------------------\n\n');
+    });
+};
+module.exports.classify = function (req, res) {
+    var sql = 'SELECT * FROM classify'; //查询分类
+    req.app.locals.mysqlQuery(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            return;
+        }
+
+        console.log('--------------------------SELECT----------------------------');
+        console.log(result);
+        res.json(req.app.locals.result(result));
+        console.log('------------------------------------------------------------\n\n');
+    });
+};
+module.exports.social = function (req, res) {
+    var sql = 'SELECT * FROM social'; //查询社交分类
+    req.app.locals.mysqlQuery(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            return;
+        }
+
+        console.log('--------------------------SELECT----------------------------');
+        console.log(result);
+        res.json(req.app.locals.result(result));
+        console.log('------------------------------------------------------------\n\n');
+    });
+};
+module.exports.features = function (req, res) {
+    var sql = 'SELECT * FROM features'; //查询焦点图
+    req.app.locals.mysqlQuery(sql, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message);
+            return;
+        }
+
+        console.log('--------------------------SELECT----------------------------');
+        console.log(result);
+        res.json(req.app.locals.result(result));
         console.log('------------------------------------------------------------\n\n');
     });
 };
@@ -210,6 +270,8 @@ module.exports.artcle_detail = function (req, res) {
 module.exports.list_artcle = function (req, res) {
     let info = {
         total: 0,
+        page:req.query.page,
+        hasNextPage:true,
         list: []
     }
     var select_sql = 'SELECT count(*) FROM artcle'
@@ -220,8 +282,8 @@ module.exports.list_artcle = function (req, res) {
         }
 
         info.total = result[0]['count(*)']
-
-        var select_sql1 = 'SELECT id,title,artcle_describe,classify_id,creat_time,classify_name,view_count FROM artcle ORDER BY creat_time DESC limit ' + (req.query.page - 1) * req.query.pageSize + ',' + req.query.pageSize + ''
+        console.log(info);
+        var select_sql1 = 'SELECT id,title,artcle_describe,classify_id,creat_time,classify_name,view_count,comments_count FROM artcle ORDER BY creat_time DESC limit ' + (req.query.page - 1) * req.query.pageSize + ',' + req.query.pageSize + ''
 
         req.app.locals.mysqlQuery(select_sql1, function (err, result) {
             if (err) {

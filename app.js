@@ -9,8 +9,8 @@ var config = require('./config');
 var router = require('./router');
 var DBConfig = require('./DBConfig.js');
 var tool = require('./util/tool.js');
-
-
+var client =require('./redisConfig.js')
+client.connect() //连接 redis
 app.use(cookieParser());
 
 var sessionStore = new MySQLStore({
