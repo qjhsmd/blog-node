@@ -1,7 +1,8 @@
 var express =require('express');
 var bodyParser = require('body-parser'); //用于处理 post请求
-var path =require('path');
+
 var handler =require('./handler.js');
+
 var router =express.Router();
 
 //设置跨域请求头 全局跨域处理 
@@ -19,7 +20,7 @@ router.all('*', function(req, res, next) {
    // 创建 application/x-www-form-urlencoded 编码解析
  var urlencodedParser = bodyParser.urlencoded({ extended: false });
  var urlencodedParser1 = bodyParser.json();
-   router.get('/',handler.index)
+   // router.get('/',handler.index)
    router.get('/api/baseInfo',handler.baseInfo)
    router.get('/api/menu',handler.menu)
    router.get('/api/classify',handler.classify)
@@ -31,4 +32,6 @@ router.all('*', function(req, res, next) {
    router.get('/api/list_artcle',handler.list_artcle)
    router.get('/api/artcle_detail',handler.artcle_detail)
    router.get('/api/login',handler.login)
+
+   router.post('/api/creatMessage',handler.creat_message)
    module.exports = router;

@@ -1,6 +1,7 @@
 
 var express = require('express');
 var app = express();
+const path = require('path')
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 const cookieParser = require('cookie-parser');
@@ -11,7 +12,11 @@ var DBConfig = require('./DBConfig.js');
 var tool = require('./util/tool.js');
 var client =require('./redisConfig.js')
 client.connect() //连接 redis
+
 app.use(cookieParser());
+
+//静态资源配置
+app.use(express.static(path.join(__dirname, 'public')));
 
 var sessionStore = new MySQLStore({
     expiration: 10800000,
