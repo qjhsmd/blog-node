@@ -283,7 +283,7 @@ module.exports.list_artcle = function (req, res) {
 
         info.total = result[0]['count(*)']
         console.log(info);
-        var select_sql1 = 'SELECT id,title,artcle_describe,classify_id,creat_time,classify_name,view_count,comments_count FROM artcle ORDER BY creat_time DESC limit ' + (req.query.page - 1) * req.query.pageSize + ',' + req.query.pageSize + ''
+        var select_sql1 = 'SELECT id,title,author,artcle_describe,classify_id,creat_time,classify_name,view_count,comments_count FROM artcle ORDER BY creat_time DESC limit ' + (req.query.page - 1) * req.query.pageSize + ',' + req.query.pageSize + ''
 
         req.app.locals.mysqlQuery(select_sql1, function (err, result) {
             if (err) {

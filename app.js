@@ -18,35 +18,33 @@ app.use(cookieParser());
 //静态资源配置
 app.use(express.static(path.join(__dirname, 'public')));
 
-var sessionStore = new MySQLStore({
-    expiration: 10800000,
-    createDatabaseTable: true,  //是否创建表
-    schema: {
-        tableName: 'session_tab',   //表名
-        columnNames: {      //列选项
-            session_id: 'session_id',
-            expires: 'expires',
-            data: 'data'
-        }
+// var sessionStore = new MySQLStore({
+//     expiration: 10800000,
+//     createDatabaseTable: true,  //是否创建表
+//     schema: {
+//         tableName: 'session_tab',   //表名
+//         columnNames: {      //列选项
+//             session_id: 'session_id',
+//             expires: 'expires',
+//             data: 'data'
+//         }
+//     }
 
-    }
-
-}, DBConfig.connection);
-
+// }, DBConfig.connection);
 
 //配置中间件
-app.use(session({
-    secret: "keyboard cat",
-    resave: false,
-    store: sessionStore,        //存储管理器
-    saveUninitialized: true,
-    cookie: ('name', 'value', {
-        maxAge: 1 * 30 * 1000,
-        secure: false,
-        name: "seName",
-        resave: false
-    })
-}));
+// app.use(session({
+//     secret: "keyboard cat",
+//     resave: false,
+//     store: sessionStore,        //存储管理器
+//     saveUninitialized: true,
+//     cookie: ('name', 'value', {
+//         maxAge: 1 * 30 * 1000,
+//         secure: false,
+//         name: "seName",
+//         resave: false
+//     })
+// }));
 
 
 

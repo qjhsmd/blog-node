@@ -1,5 +1,5 @@
 module.exports ={
-    port:9999,
+    port:9998,
     // rdis 配置
     redis:{
         host:'106.53.251.59',

@@ -2,7 +2,7 @@ var express =require('express');
 var bodyParser = require('body-parser'); //用于处理 post请求
 
 var handler =require('./handler.js');
-
+var verify = require('./util/verify')
 var router =express.Router();
 
 //设置跨域请求头 全局跨域处理 
@@ -29,9 +29,13 @@ router.all('*', function(req, res, next) {
    router.get('/api/chicken',handler.chicken)
    // router.get('/api/poisonous_chicken',handler.poisonous_chicken)
    router.post('/api/create_artcle',handler.create_artcle)
-   router.get('/api/list_artcle',handler.list_artcle)
+   router.get('/api/list_artcle',verify.verifyToken,handler.list_artcle)
    router.get('/api/artcle_detail',handler.artcle_detail)
-   router.get('/api/login',handler.login)
+   
+   // 后台接口
+   router.post('/api/admin/login',handler.login)
+   router.get('/api/admin/userInfo',verify.verifyToken,handler.userInfo)
+   router.post('/api/admin/logout',handler.logout)
 
-   router.post('/api/creatMessage',handler.creat_message)
+   router.post('/api/creat_message',handler.creat_message)
    module.exports = router;

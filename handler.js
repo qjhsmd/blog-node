@@ -10,6 +10,8 @@ var message =require('./controller/message.js')
 
 // 前后端分离的
 module.exports.login = login.login
+module.exports.userInfo = login.userInfo
+module.exports.logout = login.logout
 
 module.exports.index = index.index
 module.exports.baseInfo = index.baseInfo

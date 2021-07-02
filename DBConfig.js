@@ -2,7 +2,7 @@
 var mysql = require('mysql')
 var config = {
     host     : '106.53.251.59',
-    port     :'3306',
+    port     : '3306',
     user     : 'root',
     password : '_Q,j&h*54618482',
     database : 'blog',
@@ -11,11 +11,11 @@ var config = {
     useConnectionPooling: true
 }
 
-var conn = mysql.createConnection(config);
+// var conn = mysql.createConnection(config);
 var pool = mysql.createPool(config)
 module.exports.connection = pool;
 
-module.exports.mysqlQuery =  function query(sql, sqlParams) {
+module.exports.mysqlQuery =  function query(sql, sqlParams,callback) {
     pool.getConnection(function (err, conn) {
         if (err) {
             callback(err, null, null);
